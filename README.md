@@ -16,7 +16,9 @@ pip install -r requirements.txt
 
 ## Download CIFAR10/100-C
 
-bash scripts/download_cifar_c.sh ./data
+```bash 
+scripts/download_cifar_c.sh ./data
+```
 
 ## Train CIFAR10 head
 
