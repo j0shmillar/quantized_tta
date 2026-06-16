@@ -10,7 +10,7 @@ import torch
 from torch.utils.data import Dataset
 from torchvision import datasets, transforms
 
-corruptions = [
+corruption_types = [
     "gaussian_noise", "shot_noise", "impulse_noise", "defocus_blur", "glass_blur", "motion_blur", "zoom_blur", 
     "snow", "frost", "fog", "brightness", "contrast", "elastic_transform", "pixelate", "jpeg_compression"]
 
@@ -44,7 +44,7 @@ def image_transform(train, image_size = 224):
     return transforms.Compose(ops)
 
 
-def clean_cifar_dataset(name, root, train, image_size = 224, download = True):
+def CIFARDataset(name, root, train, image_size = 224, download = True):
     spec = dataset_spec(name)
     return spec.cifar_class(root=root, train=train, download=download, transform=image_transform(train, image_size))
 

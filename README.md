@@ -74,14 +74,14 @@ python scripts/eval_cifar_c.py \
 ## Run T3A
 
 ```bash
-python scripts/eval_cifar_c.py \ 
-  --dataset cifar10 \ 
-  --arch mobilenet_v2 \ 
-  --checkpoint ./runs/cifar10_mobilenet_v2_head.pt \ 
-  --data-root ./data \ 
-  --method t3a \ 
-  --severity 5 \ 
-  --t3a-filter-k 100 \ 
+python scripts/eval_cifar_c.py \
+  --dataset cifar10 \
+  --arch mobilenet_v2 \
+  --checkpoint ./runs/cifar10_mobilenet_v2_head.pt \
+  --data-root ./data \
+  --method t3a \
+  --severity 5 \
+  --t3a-filter-k 100 \
   --output-csv ./runs/cifar10_mobilenet_v2_t3a_s5.csv
 ```
 

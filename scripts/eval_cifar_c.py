@@ -9,7 +9,7 @@ sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 
 import torch
 
-from src.data import corruptions, dataset_spec
+from src.data import corruption_types, dataset_spec
 from src.models import build_model
 from src.eval import evaluate_cifar_c
 from src.utils import set_seed
@@ -21,8 +21,8 @@ def parse_args():
     p.add_argument("--arch", choices=["resnet18", "mobilenet_v2"], default="resnet18")
     p.add_argument("--checkpoint", required=True)
     p.add_argument("--data-root", default="./data")
-    p.add_argument("--method", choices=["source", "t3a", "foa_shift", "foa_cma_prompt"], required=True)
-    p.add_argument("--corruption", default="all", choices=["all"] + corruptions)
+    p.add_argument("--method", choices=["source", "t3a", "foa", "foa_shift"], required=True)
+    p.add_argument("--corruption", default="all", choices=["all"] + corruption_types)
     p.add_argument("--severity", type=int, default=5, choices=[1, 2, 3, 4, 5])
     p.add_argument("--batch-size", type=int, default=256)
     p.add_argument("--workers", type=int, default=4)

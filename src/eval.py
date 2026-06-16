@@ -7,7 +7,7 @@ import torch
 from torch.utils.data import DataLoader
 from tqdm import tqdm
 
-from .data import CIFARCDataset, corruptions, clean_cifar_dataset
+from .data import CIFARDataset, CIFARCDataset, corruption_types 
 from .utils import AverageMeter, accuracy, ensure_dir
 from methods.t3a import T3A
 from methods.foa import FOAShift, FOA_CIFAR
@@ -44,7 +44,7 @@ def build_adapter(method, base_model, num_classes, args, source_loader, device):
         )
         adapter.obtain_origin_stat(source_loader, device=device, max_batches=args.source_stat_batches)
         return adapter
-    if method == "foa_shift_only":
+    if method == "foa_shift":
         adapter = FOAShift(base_model.featurizer, base_model.classifier, fitness_lambda=args.foa_lambda, ema=args.foa_ema)
         adapter.obtain_origin_stat(source_loader, device=device, max_batches=args.source_stat_batches)
         return adapter
@@ -52,10 +52,10 @@ def build_adapter(method, base_model, num_classes, args, source_loader, device):
 
 
 def evaluate_cifar_c(args, base_model, spec, device):
-    source_ds = clean_cifar_dataset(args.dataset, args.data_root, train=True, image_size=args.image_size, download=True)
+    source_ds = CIFARDataset(args.dataset, args.data_root, train=True, image_size=args.image_size, download=True)
     source_loader = DataLoader(source_ds, batch_size=args.batch_size, shuffle=True, num_workers=args.workers)
     rows = []
-    corruptions = corruptions if args.corruption == "all" else [args.corruption]
+    corruptions = corruption_types if args.corruption == "all" else [args.corruption]
     for corruption in corruptions:
         adapter = build_adapter(args.method, base_model, spec.num_classes, args, source_loader, device).to(device)
         adapter.eval()
